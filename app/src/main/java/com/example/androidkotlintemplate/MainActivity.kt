@@ -1,23 +1,25 @@
 package com.example.androidkotlintemplate
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.viewpager.widget.ViewPager
+import com.example.androidkotlintemplate.Util.PreferencesHelper
 import com.example.androidkotlintemplate.arch.BaseActivity
 import com.example.androidkotlintemplate.arch.ConfirmDialog
-import com.example.androidkotlintemplate.arch.MyObserver
+import com.example.androidkotlintemplate.arch.LoadingActivity
+import com.example.androidkotlintemplate.arch.LoadingDialog
+
+//import com.example.androidkotlintemplate.arch.MyObserver
 
 class MainActivity : BaseActivity() {
     lateinit var fragment1: PageFragment
     lateinit var fragment2: PageFragment
 
     init {
-        lifecycle.addObserver(MyObserver())
+//        lifecycle.addObserver(MyObserver())
 
     }
 
@@ -48,7 +50,6 @@ class MainActivity : BaseActivity() {
         btn_change_data.setOnClickListener({ view ->
             data.value = "data changed"
         })
-
         fragment1 = PageFragment.newInstance()
         fragment1.position = 1
 

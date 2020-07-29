@@ -1,6 +1,8 @@
 package com.example.androidkotlintemplate.arch
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +13,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.example.androidkotlintemplate.R
 
 private const val DIALOG_STYLE_KEY = "DIALOG_STYLE_KEY"
 private const val DIALOG_EVENT_ACTION_OK_SELECTED = "DIALOG_EVENT_ACTION_OK_SELECTED"
@@ -23,6 +24,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun getLayoutResId(): Int
     protected abstract fun findViewById()
     protected abstract fun bindEvents()
+    val mMainThread = Handler(Looper.getMainLooper())
 
     protected open fun onPreCreate(): Boolean {
         return true
@@ -102,16 +104,18 @@ abstract class BaseDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog?.window?.let {
-            it.requestFeature(Window.FEATURE_NO_TITLE)
-        }
+        dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         val view = inflater.inflate(getLayoutResId(), container, false)
         initViews(view, savedInstanceState)
-
+        bindEvents()
         return view
     }
 
-    protected fun initViews(view: View?, savedInstanceState: Bundle?) {
+    open protected fun initViews(view: View, savedInstanceState: Bundle?) {
+
+    }
+
+    open protected fun bindEvents() {
 
     }
 
@@ -128,74 +132,10 @@ abstract class BaseDialog : DialogFragment() {
     }
 
     fun setStyle(style: Int) {
-        arguments?.let {
-            it.putInt(DIALOG_STYLE_KEY, style)
-
-        } ?: let {
+        arguments?.putInt(DIALOG_STYLE_KEY, style) ?: let {
             val bundle = Bundle()
             bundle.putInt(DIALOG_STYLE_KEY, style)
         }
     }
 }
 
-private enum class ConfirmDialogArgumentKey {
-    TITLE_KEY,
-    CONTENT_KEY,
-    TYPE_KEY,
-    NO_TITLE_KEY,
-    POSITIVE_BUTTON_TEXT_KEY,
-    NEGATIVE_BUTTON_TEXT_KEY
-}
-
-class ConfirmDialog : BaseDialog() {
-    companion object {
-        val TAG: String = "ConfirmDialog"
-    }
-
-    enum class Type {
-        ONLY_POSITIVE_BUTTON,
-        ONLY_NEGATIVE_BUTTON,
-        BOTH
-
-    }
-
-    class Builder {
-        var mTitle: String = ""
-        var mContent: String = ""
-        var mType: Type = Type.BOTH
-        var mNoTitle = false
-        var mPositiveButtonText = ""
-        var mNegativeButtonText = ""
-
-        fun build(): ConfirmDialog {
-            var confirmDialog = ConfirmDialog()
-            val bundle = Bundle()
-            bundle.putString(ConfirmDialogArgumentKey.TITLE_KEY.name, mTitle)
-            bundle.putString(ConfirmDialogArgumentKey.CONTENT_KEY.name, mContent)
-            bundle.putString(ConfirmDialogArgumentKey.TYPE_KEY.name, mType.name)
-            bundle.putBoolean(ConfirmDialogArgumentKey.NO_TITLE_KEY.name, mNoTitle)
-            bundle.putString(
-                ConfirmDialogArgumentKey.POSITIVE_BUTTON_TEXT_KEY.name,
-                mPositiveButtonText
-            )
-            bundle.putString(
-                ConfirmDialogArgumentKey.NEGATIVE_BUTTON_TEXT_KEY.name,
-                mNegativeButtonText
-            )
-
-            confirmDialog.arguments = bundle
-            return confirmDialog
-        }
-    }
-
-    override fun getLayoutResId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-}
-
-class LoadingDialog : BaseDialog() {
-    override fun getLayoutResId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-}

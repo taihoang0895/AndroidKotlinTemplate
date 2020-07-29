@@ -3,4 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorBlackTrans">#B2000000</color>
+    <color name="colorYellowBtn">#FFCB2E</color>
+    <color name="confirm_dialog_bg_color">@android:color/white</color>
 </resources>

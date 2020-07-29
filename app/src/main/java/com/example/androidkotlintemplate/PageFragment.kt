@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.androidkotlintemplate.arch.StockLiveData
+//import com.example.androidkotlintemplate.arch.StockLiveData
 
 
 class PageFragment : Fragment() {
@@ -37,9 +37,9 @@ class PageFragment : Fragment() {
         /*(activity as MainActivity).data.observe(viewLifecycleOwner, Observer {
             Log.d("taih ", "PageFragment data changed ${it}")
         })*/
-        StockLiveData.get().observe(viewLifecycleOwner, Observer<String> {
-            MyObserver()
-        })
+//        StockLiveData.get().observe(viewLifecycleOwner, Observer<String> {
+//            MyObserver()
+//        })
 
 
     }

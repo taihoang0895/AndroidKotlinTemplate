@@ -3,4 +3,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="common_txt_ok_upcase">OK</string>
+    <string name="common_txt_cancel_upcase">CANCEL</string>
+    <string name="please_wait">Please wait</string>
+    <string name="permissions_txt_write_external_storage_permission_confirmation">This app needs write external storage permission to read and write data to storage.</string>
+    <string name="permissions_txt_camera_confirmation">This app needs camera permission.</string>
 </resources>
